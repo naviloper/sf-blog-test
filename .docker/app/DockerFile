@@ -1,0 +1,23 @@
+FROM php:8.2.0-fpm
+
+RUN docker-php-ext-install pdo_mysql
+
+RUN pecl install apcu
+
+RUN apt-get update && \
+apt-get install -y \
+        libzip-dev \
+        libpng-dev
+
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install zip
+RUN docker-php-ext-enable apcu
+
+#installing composer
+RUN curl -sS https://getcomposer.org/installer | tee composer-setup.php \
+    && php composer-setup.php && rm composer-setup.php* \
+    && chmod +x composer.phar && mv composer.phar /usr/bin/composer
+
+WORKDIR /usr/src/app
+COPY --chown=1000:1000 ./ /usr/src/app
+RUN mkdir /.composer && chown -R 1000:1000 /.composer
