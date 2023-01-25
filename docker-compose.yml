@@ -1,8 +1,12 @@
 version: '3'
 
+networks:
+  sf_network:
+
 services:
   database:
     image: mysql:5.7
+    container_name: database
     command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3309:3306"
@@ -14,6 +18,8 @@ services:
     volumes:
       - ./../sf_db:/var/lib/mysql
     restart: on-failure
+    networks:
+      - sf_network
 
   server:
     image: nginx:1.23.3-alpine
@@ -25,6 +31,8 @@ services:
       - './.docker/server/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro'
     depends_on:
       - app
+    networks:
+      - sf_network
 
   app:
     build:
@@ -36,4 +44,6 @@ services:
     env_file:
       - .env
     user: 1000:1000
+    networks:
+      - sf_network
 
