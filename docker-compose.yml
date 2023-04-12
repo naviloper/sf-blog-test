@@ -16,7 +16,7 @@ services:
       MYSQL_USER: sf_user
       MYSQL_PASSWORD: sf_pass
     volumes:
-      - ./../sf_db:/var/lib/mysql
+      - ./../sf-ca_db:/var/lib/mysql
     restart: on-failure
     networks:
       - sf_network
