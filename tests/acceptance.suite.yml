@@ -4,13 +4,13 @@
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 suites:
-acceptance:
- actor: AcceptanceTester
-    modules:
-    enabled:
-        - PhpBrowser:
+    acceptance:
+    actor: AcceptanceTester
+        modules:
+        enabled:
+            - PhpBrowser:
             url: http://localhost:8090
-        - \App\Tests\Helper\Acceptance
+            - \App\Tests\Helper\Acceptance
         # Configure the BDD-style Gherkin format for acceptance tests
     extensions:
     enabled:
