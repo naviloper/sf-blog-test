@@ -5,7 +5,7 @@ networks:
 
 services:
   database:
-    image: mysql:5.7
+    image: arm64v8/mysql:8.0.32
     container_name: database
     command: --default-authentication-plugin=mysql_native_password
     ports:

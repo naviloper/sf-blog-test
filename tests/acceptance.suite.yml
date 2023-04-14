@@ -3,10 +3,28 @@
 # Suite for acceptance tests.
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
-
-actor: AcceptanceTester
-modules:
-    enabled:
-        - PhpBrowser:
+suites:
+    acceptance:
+    actor: AcceptanceTester
+        modules:
+        enabled:
+            - PhpBrowser:
             url: http://localhost:8090
-        - \App\Tests\Helper\Acceptance
+            - \App\Tests\Helper\Acceptance
+        # Configure the BDD-style Gherkin format for acceptance tests
+    extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
+        - Codeception\Extension\Recorder:
+            delete_successful: true
+            delete_old: false
+        - Codeception\Extension\AllureIntegration:
+        output_dir: 'tests/_output/allure-results'
+    config:
+    # Define the path to the Gherkin feature files for the acceptance suite
+    Codeception\Extension\Gherkin:
+      feature_path: 'tests/acceptance/features'
+      steps:
+        # Define the path to the Gherkin steps for the acceptance suite
+        paths:
+          - 'tests/_support/Step/Acceptance'
